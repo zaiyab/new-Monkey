@@ -11,10 +11,9 @@ export class NewsItem extends Component {
               <h5 className="card-title">{title}{originallength.length>45?'....':''}</h5>
               <p className="card-text">{desc}....</p>
               <p><strong>Publish Date: </strong>{date}</p>
-              <a href={newsurl} target='_blank' className="btn btn-sm btn-primary">Read More</a>
+              <a href={newsurl} target='_blank' className="btn btn-sm btn-dark">Read More</a>
          </div>
-</div>
-      
+        </div>     
       </div>
     )
   }

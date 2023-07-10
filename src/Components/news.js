@@ -88,6 +88,10 @@ articles = [
                         })}       
                    </div> 
              </div>
+             <div className='container my-2 d-flex justify-content-between'>
+                    <button type="button" className="btn btn-dark mx-1">Previous</button>
+                    <button type="button" className="btn btn-dark mx-1">Next</button>
+             </div>
       </div>
     )
   }

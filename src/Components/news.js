@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
-
+import load from './load.gif'
 
 export class News extends Component {
 
@@ -146,13 +146,13 @@ export class News extends Component {
     return (
 
       <div>
-        {this.state.loading && <Spinner />}
+        {/* {this.state.loading && <Spinner />} */}
         <div className='container my-3 py-3'>
           <h1 className='text-center'>Top headlines - {this.capitalizeFirstLetter(this.props.cat)}</h1>
           <div className='row my-3'>
-            {!this.state.loading && this.state.articles.map((elements) => {
+            {this.state.articles.map((elements) => {
               return <div className='col-md-4' key={elements.url}>
-                <NewsItem date={elements.publishedAt ? elements.publishedAt.slice(0, 10) : null} author={elements.author ? elements.author : 'Unknown'} originallength={elements.title} title={elements.title ? elements.title.slice(0, 45) : null} urlimg={elements.urlToImage ? elements.urlToImage : 'https://placehold.co/600x400'} desc={elements.description ? elements.description.slice(0, 88) : null} newsurl={elements.url} />
+                <NewsItem date={elements.publishedAt ? elements.publishedAt.slice(0, 10) : null} author={elements.author ? elements.author : 'Unknown'} originallength={elements.title} title={elements.title ? elements.title.slice(0, 45) : null} urlimg={!this.state.loading ? elements.urlToImage : load} desc={elements.description ? elements.description.slice(0, 88) : null} newsurl={elements.url} />
               </div>
             })}
           </div>
@@ -168,3 +168,4 @@ export class News extends Component {
 
 export default News
 
+// !this.state.loading && 

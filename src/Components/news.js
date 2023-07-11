@@ -68,16 +68,19 @@ export class News extends Component {
   }
 
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: this.articles,
       loading: false,
       page: 1,
       rescount: 0
     }
+    document.title = `${this.capitalizeFirstLetter(this.props.cat)} - NewsMonkey`
   }
-
+  capitalizeFirstLetter = (string) => {
+      return string.charAt(0).toUpperCase()+ string.slice(1);
+  }
   async updateNews() {
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.cat}&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&&page=${this.state.page}&pagesize=${this.props.pageSize}`;
     this.setState({ loading: true })
@@ -111,9 +114,9 @@ export class News extends Component {
     //   , loading: false
     // })
     this.setState({
-      page:this.state.page -1
+      page: this.state.page - 1
     })
-this.updateNews()
+    this.updateNews()
   }
 
   handleNextClick = async () => {
@@ -133,7 +136,7 @@ this.updateNews()
     //   })
     // }
     this.setState({
-      page:this.state.page +1
+      page: this.state.page + 1
     })
     this.updateNews()
   }
@@ -145,7 +148,7 @@ this.updateNews()
       <div>
         {this.state.loading && <Spinner />}
         <div className='container my-3 py-3'>
-          <h1 className='text-center'>Top headlines - {this.props.cat}</h1>
+          <h1 className='text-center'>Top headlines - {this.capitalizeFirstLetter(this.props.cat)}</h1>
           <div className='row my-3'>
             {!this.state.loading && this.state.articles.map((elements) => {
               return <div className='col-md-4' key={elements.url}>

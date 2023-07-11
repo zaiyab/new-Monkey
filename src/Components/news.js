@@ -70,14 +70,14 @@ articles = [
   }
 
   async componentDidMount(){
-    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=1&pagesize=20";
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=1&pagesize=${this.props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({articles:parsedData.articles,rescount:parsedData.totalResults})
   }
 
   handlePrevClick =async ()=>{
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page-1}&pagesize=20`
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page-1}&pagesize=${this.props.pageSize}`
     
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -90,10 +90,10 @@ articles = [
   }
 
   handleNextClick=async ()=>{
-    if(Math.ceil(this.state.rescount/20)<=this.state.page){
+    if(Math.ceil(this.state.rescount/this.props.pageSize)<=this.state.page){
 
     }else{
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page+1}&pagesize=20`
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page+1}&pagesize=${this.props.pageSize}`
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
@@ -123,7 +123,7 @@ articles = [
              </div>
              <div className='container my-2 d-flex justify-content-between'>
                     <button type="button" disabled={this.state.page<=1} className="btn btn-dark mx-1" onClick={this.handlePrevClick}>&larr; Previous</button>
-                    <button type="button" disabled={Math.ceil(this.state.rescount/20)<=this.state.page} className="btn btn-dark mx-1" onClick={this.handleNextClick}>Next &rarr;</button>
+                    <button type="button" disabled={Math.ceil(this.state.rescount/this.props.pageSize)<=this.state.page} className="btn btn-dark mx-1" onClick={this.handleNextClick}>Next &rarr;</button>
              </div>
       </div>
     )

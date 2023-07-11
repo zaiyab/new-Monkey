@@ -141,6 +141,16 @@ export class News extends Component {
     this.updateNews()
   }
 
+  imageHandle = (url)=>{
+     if(this.state.loading ){
+       return load
+ 
+     }else if(url){
+      return url
+     }else{
+      return 'https://placehold.co/600x400'
+     }
+   }
   render() {
 
     return (
@@ -152,7 +162,7 @@ export class News extends Component {
           <div className='row my-3'>
             {this.state.articles.map((elements) => {
               return <div className='col-md-4' key={elements.url}>
-                <NewsItem date={elements.publishedAt ? elements.publishedAt.slice(0, 10) : null} author={elements.author ? elements.author : 'Unknown'} originallength={elements.title} title={elements.title ? elements.title.slice(0, 45) : null} urlimg={!this.state.loading ? elements.urlToImage : load} desc={elements.description ? elements.description.slice(0, 88) : null} newsurl={elements.url} />
+                <NewsItem date={elements.publishedAt ? elements.publishedAt.slice(0, 10) : null} author={elements.author ? elements.author : 'Unknown'} originallength={elements.title} title={elements.title ? elements.title.slice(0, 45) : null} urlimg={this.imageHandle(elements.urlToImage)} desc={elements.description ? elements.description.slice(0, 88) : null} newsurl={elements.url} />
               </div>
             })}
           </div>

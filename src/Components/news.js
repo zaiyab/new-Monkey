@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import { round } from 'mathjs'
+import Spinner from './Spinner';
 
 export class News extends Component {
   
@@ -71,14 +72,17 @@ articles = [
 
   async componentDidMount(){
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=1&pagesize=${this.props.pageSize}`;
+    this.setState({loading:true})
+
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({articles:parsedData.articles,rescount:parsedData.totalResults})
+    this.setState({articles:parsedData.articles,rescount:parsedData.totalResults,loading:false})
   }
 
   handlePrevClick =async ()=>{
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page-1}&pagesize=${this.props.pageSize}`
-    
+    this.setState({loading:true})
+
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
@@ -86,6 +90,7 @@ articles = [
      articles:parsedData.articles,
       page:this.state.page -1,
       rescount:parsedData.totalResults
+      ,loading:false
     })
   }
 
@@ -94,12 +99,14 @@ articles = [
 
     }else{
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=fc4524215a4d46da8f00d7a2bfb3d968&page=${this.state.page+1}&pagesize=${this.props.pageSize}`
+    this.setState({loading:true})
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
      articles:parsedData.articles,
       page:this.state.page +1,
-      rescount:parsedData.totalResults
+      rescount:parsedData.totalResults,
+      loading:false
 
     })
   }
@@ -111,10 +118,11 @@ articles = [
     return (
     
      <div>
+      {this.state.loading &&<Spinner />}
            <div className='container my-3 py-3'>
                 <h1>NewsMonkey - top headlines</h1>      
                      <div className='row my-3'>
-                        {this.state.articles.map((elements)=>{
+                        {!this.state.loading &&this.state.articles.map((elements)=>{
                           return <div className='col-md-4' key={elements.url}>
                           <NewsItem date={elements.publishedAt? elements.publishedAt.slice(0,10):null} originallength = {elements.title} title={elements.title ? elements.title.slice(0, 45) : null} urlimg = {elements.urlToImage?elements.urlToImage:'https://placehold.co/600x400'} desc = {elements.description ? elements.description.slice(0, 88) : null} newsurl={elements.url}/>
                           </div>                     

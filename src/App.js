@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 export class App extends Component {
-
+pagesize = 15
   render() {
     return (
       <div>
@@ -13,16 +13,16 @@ export class App extends Component {
           <Navbar />
           <Routes>
 
-            <Route path="/" element={<News pageSize={9} country='us' cat="general" />} />
-            <Route path="/business" element={<News key="busness" pageSize={9} country='us' cat="business" />} />
-            <Route path="/entertainment" element={<News key="entertainment" pageSize={9} country='us' cat="entertainment" />} />
+            <Route path="/" element={<News pageSize={this.pagesize} country='us' cat="general" />} />
+            <Route path="/business" element={<News key="busness" pageSize={this.pagesize} country='us' cat="business" />} />
+            <Route path="/entertainment" element={<News key="entertainment" pageSize={this.pagesize} country='us' cat="entertainment" />} />
 
-            <Route path="/health" element={<News key="health" pageSize={9} country='us' cat="health" />} />
+            <Route path="/health" element={<News key="health" pageSize={this.pagesize} country='us' cat="health" />} />
 
-            <Route path="/science" element={<News key="science" pageSize={9} country='us' cat="science" />} />
-            <Route path="/sports" element={<News key="sports" pageSize={9} country='us' cat="sports" />} />
+            <Route path="/science" element={<News key="science" pageSize={this.pagesize} country='us' cat="science" />} />
+            <Route path="/sports" element={<News key="sports" pageSize={this.pagesize} country='us' cat="sports" />} />
 
-            <Route path="/technology" element={<News key="technology" pageSize={9} country='us' cat="technology" />} />
+            <Route path="/technology" element={<News key="technology" pageSize={this.pagesize} country='us' cat="technology" />} />
 
 
 

@@ -63,7 +63,7 @@ export class News extends Component {
   static defaultProps = {
 
     country: "us",
-    pageSize: 9,
+    pageSize: 15,
     cat: "general"
   }
 

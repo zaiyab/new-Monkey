@@ -9,21 +9,21 @@ import { async } from "q";
 //   props.cat
 // )} - NewsMonkey`; 
 const News =(props)=> {
-  articles = [];
-
+  
    const [articles,setArticles] = useState([])
-   const [loading,setLoading] = useState(flase)
+   const [loading,setLoading] = useState(false)
    const [page,setPage]= useState(1)
    const [rescount,setRescount]= useState(0)
 
-  capitalizeFirstLetter = (string) => {
+  const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+ 
 
  const updateNews = async()=> {
     props.setProgress(10);
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${this.state.page}&pagesize=${props.pageSize}`;
-    this.setState({ loading: true });
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${page}&pagesize=${props.pageSize}`;
+    setLoading(true)
     props.setProgress(30);
     let data = await fetch(url);
     props.setProgress(45);
@@ -36,12 +36,14 @@ const News =(props)=> {
     props.setProgress(100);
   }
 
-  const componentDidMount= async()=> {
-    this.updateNews();
-  }
+useEffect(()=>{
+ 
+  updateNews();
 
-  imageHandle = (url) => {
-    if (this.state.loading) {
+},[])
+ 
+  const imageHandle = (url) => {
+    if (loading) {
       return load;
     } else if (url) {
       return url;
@@ -50,15 +52,14 @@ const News =(props)=> {
     }
   };
 
-  fetchMoreData = async () => {
-    this.setState({ page: this.state.page + 1 });
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${this.state.page}&pagesize=${props.pageSize}`;
+  const fetchMoreData = async () => {
+    setPage(page + 1 );
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${page}&pagesize=${props.pageSize}`;
 
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({
-      articles: this.state.articles.concat(parsedData.articles),
-    });
+    setArticles(articles.concat(parsedData.articles))
+   
    
   };
 
@@ -69,15 +70,16 @@ const News =(props)=> {
           <h1 className="text-center">
             Top headlines - {capitalizeFirstLetter(props.cat)}
           </h1>
+         
           <InfiniteScroll
-            dataLength={this.state.articles.length}
-            next={this.fetchMoreData}
-            hasMore={this.state.articles.length !== this.state.rescount}
+            dataLength={articles.length}
+            next={fetchMoreData}
+            hasMore={articles.length !==rescount}
             loader={<Spinner />}
           >
             <div className="container">
               <div className="row my-3">
-                {this.state.articles.map((elements) => {
+                {articles.map((elements) => {
                   return (
                     <div className="col-md-4" key={elements.url}>
                       <NewsItem
@@ -92,7 +94,7 @@ const News =(props)=> {
                         title={
                           elements.title ? elements.title.slice(0, 45) : null
                         }
-                        urlimg={this.imageHandle(elements.urlToImage)}
+                        urlimg={imageHandle(elements.urlToImage)}
                         desc={
                           elements.description
                             ? elements.description.slice(0, 88)

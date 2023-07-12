@@ -32,11 +32,7 @@ const News =(props)=> {
     setArticles(parsedData.articles)
     setRescount(parsedData.setRescount)
     setLoading(false)
-    this.setState({
-      articles: parsedData.articles,
-      rescount: parsedData.totalResults,
-      loading: false,
-    });
+  
     props.setProgress(100);
   }
 

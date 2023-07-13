@@ -3,7 +3,7 @@ import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 import load from "./load.gif";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { async } from "q";
+
 
 // document.title = `${capitalizeFirstLetter(
 //   props.cat
@@ -39,7 +39,7 @@ const News =(props)=> {
 useEffect(()=>{
  
   updateNews();
-
+//eslint-disable-next-line
 },[])
  
   const imageHandle = (url) => {
@@ -53,9 +53,9 @@ useEffect(()=>{
   };
 
   const fetchMoreData = async () => {
+ 
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${page+1}&pagesize=${props.pageSize}`;
     setPage(page + 1 );
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.cat}&apiKey=${props.apiKey}&&page=${page}&pagesize=${props.pageSize}`;
-
     let data = await fetch(url);
     let parsedData = await data.json();
     setArticles(articles.concat(parsedData.articles))
@@ -67,7 +67,7 @@ useEffect(()=>{
       <>
         {/* {this.state.loading && <Spinner />} */}
         <div className="container my-3 py-3">
-          <h1 className="text-center">
+          <h1 className="text-center" style={{marginTop:"80px"}}>
             Top headlines - {capitalizeFirstLetter(props.cat)}
           </h1>
          
